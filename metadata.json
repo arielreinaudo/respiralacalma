@@ -1,0 +1,7 @@
+{
+  "name": "Emyti Holistic Healing - Entrenador de Respiración",
+  "description": "Una aplicación de entrenamiento de respiración guiada con visualizaciones sincronizadas, sonido de segundero y seguimiento de progreso para mejorar el bienestar.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
