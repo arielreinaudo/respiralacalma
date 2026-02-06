@@ -115,7 +115,7 @@ const App: React.FC = () => {
     tipTimerRef.current = 0;
     
     if (isCalibration) {
-      setTimeLeft(30);
+      setTimeLeft(60); // Aumentado a 60 segundos por solicitud del usuario
       setScreen(Screen.CALIBRATION);
     } else {
       setTimeLeft(config.duration === 'free' ? 0 : config.duration * 60);
@@ -334,7 +334,13 @@ const App: React.FC = () => {
 
         {screen === Screen.CALIBRATION && (
           <div className="flex flex-col items-center justify-center min-h-screen p-6 text-center space-y-12">
-            <header><h2 className={`text-2xl font-bold ${theme.textMain}`}>Modo Calibración</h2><p className={theme.textDim}>Ajusta el ritmo a tu comodidad.</p></header>
+            <header className="space-y-2">
+              <h2 className={`text-2xl font-bold ${theme.textMain}`}>Modo Calibración</h2>
+              <p className={theme.textDim}>Ajusta el ritmo a tu comodidad antes de comenzar.</p>
+              <div className="inline-block px-4 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-mono text-sm font-bold">
+                Tiempo restante: {timeLeft}s
+              </div>
+            </header>
             <BreathingCircle phase={phase} progress={progress} amplitude={config.amplitude} cycleCount={cycleCount} />
             <div className="w-full max-w-md space-y-6">
               <div className={`${theme.card} flex justify-between items-center p-4 rounded-2xl shadow-sm border`}>
