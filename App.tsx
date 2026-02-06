@@ -5,7 +5,9 @@ import { BREATH_PRESETS, DURATIONS, MICRO_TIPS } from './constants';
 import { audioService } from './services/AudioService';
 import WaveCanvas from './components/WaveCanvas';
 
-// --- Helper Components defined outside App to prevent re-mount on every state update ---
+// URLs de imágenes constantes para preloading
+const IMG_ADRIANA = "https://www.dropbox.com/scl/fi/otjqcs6zsn2xlek2pxnn0/Adriana-circle.png?rlkey=9nelpp0neu1ihmqdic4cwme3x&dl=1";
+const IMG_ARIEL = "https://www.dropbox.com/scl/fi/v6b871uxejflzh2alff3z/Iconos-landing-visualmedita.png?rlkey=55j22v07rloudtrt3v2fj3ez9&dl=1";
 
 const BreathingCircle: React.FC<{ phase: Phase; progress: number; amplitude: number; cycleCount: number }> = ({ phase, progress, amplitude, cycleCount }) => {
   const rampFactor = cycleCount < 3 ? 0.8 + (cycleCount * 0.06) : 1.0;
@@ -41,7 +43,6 @@ const App: React.FC = () => {
     amplitude: 0.8
   });
   
-  // Mantenemos las preferencias en estado interno pero sin controles en UI
   const [prefs, setPrefs] = useState<Preferences>(() => {
     const saved = localStorage.getItem('breath_prefs');
     if (saved) return JSON.parse(saved);
@@ -82,6 +83,17 @@ const App: React.FC = () => {
     label: prefs.darkMode ? 'text-slate-400' : 'text-slate-500',
   }), [prefs.darkMode]);
 
+  // --- Optimization: Preload Images ---
+  useEffect(() => {
+    const preloadImages = () => {
+      [IMG_ADRIANA, IMG_ARIEL].forEach(src => {
+        const img = new Image();
+        img.src = src;
+      });
+    };
+    preloadImages();
+  }, []);
+
   // --- Persistence ---
   useEffect(() => {
     const savedHistory = localStorage.getItem('breath_history');
@@ -115,7 +127,7 @@ const App: React.FC = () => {
     tipTimerRef.current = 0;
     
     if (isCalibration) {
-      setTimeLeft(60); // Aumentado a 60 segundos por solicitud del usuario
+      setTimeLeft(60); 
       setScreen(Screen.CALIBRATION);
     } else {
       setTimeLeft(config.duration === 'free' ? 0 : config.duration * 60);
@@ -222,21 +234,25 @@ const App: React.FC = () => {
                 <p className={`${theme.textDim} text-[10px] uppercase tracking-widest font-bold`}>Guias</p>
                 <div className="flex justify-center items-center gap-8">
                   <div className="flex flex-col items-center gap-2">
-                    <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-blue-500/30 shadow-lg bg-slate-200">
+                    <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-blue-500/30 shadow-lg bg-slate-300">
                       <img 
-                        src="https://www.dropbox.com/scl/fi/otjqcs6zsn2xlek2pxnn0/Adriana-circle.png?rlkey=9nelpp0neu1ihmqdic4cwme3x&dl=1" 
+                        src={IMG_ADRIANA} 
                         alt="Dra. Adriana Ortiz" 
                         className="w-full h-full object-cover"
+                        loading="eager"
+                        fetchpriority="high"
                       />
                     </div>
                     <p className={`${theme.textMain} text-[10px] font-bold`}>Dra. Adriana Ortiz</p>
                   </div>
                   <div className="flex flex-col items-center gap-2">
-                    <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-blue-500/30 shadow-lg bg-slate-200">
+                    <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-blue-500/30 shadow-lg bg-slate-300">
                       <img 
-                        src="https://www.dropbox.com/scl/fi/v6b871uxejflzh2alff3z/Iconos-landing-visualmedita.png?rlkey=55j22v07rloudtrt3v2fj3ez9&dl=1" 
+                        src={IMG_ARIEL} 
                         alt="Ariel Reinaudo" 
                         className="w-full h-full object-cover"
+                        loading="eager"
+                        fetchpriority="high"
                       />
                     </div>
                     <p className={`${theme.textMain} text-[10px] font-bold`}>Ariel Reinaudo</p>
