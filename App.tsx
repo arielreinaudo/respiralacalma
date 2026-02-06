@@ -270,7 +270,7 @@ const App: React.FC = () => {
                         alt="Dra. Adriana Ortiz" 
                         className="w-full h-full object-cover"
                         loading="eager"
-                        fetchpriority="high"
+                        {...({ fetchPriority: "high" } as any)}
                       />
                     </div>
                     <p className={`${theme.textMain} text-[10px] font-bold`}>Dra. Adriana Ortiz</p>
@@ -282,7 +282,7 @@ const App: React.FC = () => {
                         alt="Ariel Reinaudo" 
                         className="w-full h-full object-cover"
                         loading="eager"
-                        fetchpriority="high"
+                        {...({ fetchPriority: "high" } as any)}
                       />
                     </div>
                     <p className={`${theme.textMain} text-[10px] font-bold`}>Ariel Reinaudo</p>
