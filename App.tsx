@@ -36,7 +36,6 @@ const App: React.FC = () => {
   const [lang, setLang] = useState<'es' | 'en'>(() => {
     const saved = localStorage.getItem('breath_lang');
     if (saved === 'es' || saved === 'en') return saved;
-    // Por defecto español
     return 'es';
   });
 
@@ -58,7 +57,7 @@ const App: React.FC = () => {
     return {
       darkMode: true,
       reduceMotion: false,
-      audioVolume: 0.5,
+      audioVolume: 1.0, // Default volume a 1.0
       isMuted: false,
       silentMode: false
     };
@@ -233,16 +232,16 @@ const App: React.FC = () => {
   };
 
   const LanguageSwitcher = () => (
-    <div className="flex items-center justify-center bg-slate-200/50 dark:bg-slate-800/50 p-1 rounded-full w-fit mx-auto mb-4">
+    <div className="flex items-center justify-center bg-slate-200 dark:bg-slate-800 p-1 rounded-full w-fit mx-auto mb-6 shadow-inner">
       <button 
         onClick={() => setLang('es')} 
-        className={`px-4 py-1.5 rounded-full text-[11px] font-bold transition-all ${lang === 'es' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-500 hover:text-slate-400'}`}
+        className={`px-6 py-2 rounded-full text-[11px] font-bold transition-all ${lang === 'es' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-500 dark:text-slate-400 hover:text-blue-500'}`}
       >
         ESPAÑOL
       </button>
       <button 
         onClick={() => setLang('en')} 
-        className={`px-4 py-1.5 rounded-full text-[11px] font-bold transition-all ${lang === 'en' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-500 hover:text-slate-400'}`}
+        className={`px-6 py-2 rounded-full text-[11px] font-bold transition-all ${lang === 'en' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-500 dark:text-slate-400 hover:text-blue-500'}`}
       >
         ENGLISH
       </button>
@@ -333,14 +332,14 @@ const App: React.FC = () => {
               </div>
             </section>
 
-            <div className="space-y-2 pt-4">
+            <div className="space-y-4 pt-4">
               <LanguageSwitcher />
               <div className="flex flex-col sm:flex-row gap-4">
                 <button onClick={() => startSession(true)} className={`flex-1 py-4 px-6 rounded-2xl border-2 transition-all font-bold ${prefs.darkMode ? 'border-slate-800 text-slate-300 hover:bg-slate-900' : 'border-blue-100 text-blue-600 hover:bg-blue-50'}`}>{t.calibrate}</button>
                 <button onClick={() => startSession(false)} className="flex-1 py-4 px-6 rounded-2xl bg-blue-600 text-white font-bold shadow-xl shadow-blue-500/30 hover:bg-blue-700 transition-all hover:scale-[1.02] active:scale-95">{t.start}</button>
               </div>
               
-              <div className="flex flex-col items-center gap-6 pt-6">
+              <div className="flex flex-col items-center gap-6 pt-6 w-full text-center">
                 <div className="flex justify-center gap-6 items-center w-full">
                   <a 
                     href="https://webilution.ac-page.com/regulatuestres?test=true"
@@ -360,20 +359,24 @@ const App: React.FC = () => {
                   </a>
                 </div>
                 
-                <div className="flex flex-col items-center gap-3">
-                  <p className={`text-[10px] text-center px-8 italic opacity-80 ${theme.textDim} leading-relaxed max-w-xs`}>
+                <div className="flex flex-col items-center gap-4 w-full text-center">
+                  <p className={`text-[10px] text-center px-8 italic opacity-80 ${theme.textDim} leading-relaxed max-w-xs mx-auto`}>
                     {t.recommendation}
                   </p>
-                  <a 
-                    href="https://calendly.com/adrianaortiz/regulatuestres?month=2026-02"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`py-3 px-8 rounded-2xl text-sm font-bold border transition-all hover:scale-[1.03] active:scale-95 shadow-sm ${prefs.darkMode ? 'bg-slate-800 border-slate-700 text-white' : 'bg-slate-100 border-slate-200 text-slate-900'}`}
-                  >
-                    {t.schedule}
-                  </a>
                   
-                  <p className={`text-[9px] text-center px-4 mt-2 opacity-60 ${theme.textDim} leading-tight max-w-sm`}>
+                  {/* Contenedor forzado para centrado perfecto en Android */}
+                  <div className="w-full flex justify-center items-center py-2">
+                    <a 
+                      href="https://calendly.com/adrianaortiz/regulatuestres?month=2026-02"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`inline-block py-3 px-8 rounded-2xl text-sm font-bold border transition-all hover:scale-[1.03] active:scale-95 shadow-sm text-center mx-auto ${prefs.darkMode ? 'bg-slate-800 border-slate-700 text-white' : 'bg-slate-100 border-slate-200 text-slate-900'}`}
+                    >
+                      {t.schedule}
+                    </a>
+                  </div>
+                  
+                  <p className={`text-[9px] text-center px-4 mt-2 opacity-60 ${theme.textDim} leading-tight max-w-sm mx-auto`}>
                     {t.disclaimer}
                   </p>
                 </div>

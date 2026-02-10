@@ -1,7 +1,7 @@
 
 export class AudioService {
   private context: AudioContext | null = null;
-  private volume: number = 0.5;
+  private volume: number = 1.0;
   private isMuted: boolean = false;
   private isSilent: boolean = false;
 
@@ -37,7 +37,8 @@ export class AudioService {
     osc.frequency.setValueAtTime(440, this.context.currentTime);
     osc.frequency.exponentialRampToValueAtTime(110, this.context.currentTime + 0.05);
 
-    gain.gain.setValueAtTime(this.volume * 0.1, this.context.currentTime);
+    // Incrementamos el multiplicador de ganancia de 0.1 a 0.4 para mayor volumen en móviles
+    gain.gain.setValueAtTime(this.volume * 0.4, this.context.currentTime);
     gain.gain.exponentialRampToValueAtTime(0.01, this.context.currentTime + 0.05);
 
     osc.connect(gain);
