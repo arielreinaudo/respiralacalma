@@ -37,8 +37,9 @@ export class AudioService {
     osc.frequency.setValueAtTime(440, this.context.currentTime);
     osc.frequency.exponentialRampToValueAtTime(110, this.context.currentTime + 0.05);
 
-    // Incrementamos el multiplicador de ganancia de 0.1 a 0.4 para mayor volumen en móviles
-    gain.gain.setValueAtTime(this.volume * 0.4, this.context.currentTime);
+    // Incrementamos sustancialmente el multiplicador de ganancia de 0.4 a 0.8 
+    // para maximizar el volumen en dispositivos móviles.
+    gain.gain.setValueAtTime(this.volume * 0.8, this.context.currentTime);
     gain.gain.exponentialRampToValueAtTime(0.01, this.context.currentTime + 0.05);
 
     osc.connect(gain);

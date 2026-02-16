@@ -312,7 +312,8 @@ const App: React.FC = () => {
                     <label className={`block text-[10px] uppercase font-bold ${theme.label} mb-1`}>
                       {key === 'inhale' ? t.inhale : key === 'exhale' ? t.exhale : t.hold}
                     </label>
-                    <input type="number" step="0.5" value={config[key as keyof BreathConfig] as number} onChange={e => setConfig({...config, [key]: parseFloat(e.target.value) || 0})} className={`w-full ${theme.input} rounded-lg p-2 text-center font-bold border`} />
+                    {/* Incremento de a 1 en el step */}
+                    <input type="number" step="1" value={config[key as keyof BreathConfig] as number} onChange={e => setConfig({...config, [key]: parseFloat(e.target.value) || 0})} className={`w-full ${theme.input} rounded-lg p-2 text-center font-bold border`} />
                   </div>
                 ))}
               </div>
@@ -399,7 +400,8 @@ const App: React.FC = () => {
               <div className={`${theme.card} flex justify-between items-center p-4 rounded-2xl shadow-sm border`}>
                 <button 
                   onClick={() => { 
-                    setConfig(prev => ({ ...prev, inhale: prev.inhale + 0.5, exhale: prev.exhale + 0.5 })); 
+                    // Incremento de a 1 segundo
+                    setConfig(prev => ({ ...prev, inhale: prev.inhale + 1, exhale: prev.exhale + 1 })); 
                   }} 
                   className={`px-6 py-3 rounded-xl font-bold ${theme.btnSecondary}`}
                 >
@@ -408,10 +410,11 @@ const App: React.FC = () => {
                 <div className={`font-mono text-lg font-bold ${theme.textMain}`}>{config.inhale.toFixed(1)}s / {config.exhale.toFixed(1)}s</div>
                 <button 
                   onClick={() => { 
+                    // Decremento de a 1 segundo
                     setConfig(prev => ({ 
                       ...prev, 
-                      inhale: Math.max(2, prev.inhale - 0.5), 
-                      exhale: Math.max(2, prev.exhale - 0.5) 
+                      inhale: Math.max(2, prev.inhale - 1), 
+                      exhale: Math.max(2, prev.exhale - 1) 
                     })); 
                   }} 
                   className={`px-6 py-3 rounded-xl font-bold ${theme.btnSecondary}`}
