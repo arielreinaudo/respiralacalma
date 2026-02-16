@@ -57,7 +57,7 @@ const App: React.FC = () => {
     return {
       darkMode: true,
       reduceMotion: false,
-      audioVolume: 1.0, // Default volume a 1.0
+      audioVolume: 1.0, 
       isMuted: false,
       silentMode: false
     };
@@ -89,6 +89,7 @@ const App: React.FC = () => {
     textDim: prefs.darkMode ? 'text-slate-300' : 'text-slate-500',
     btnSecondary: prefs.darkMode ? 'bg-slate-800 text-slate-200 hover:bg-slate-700' : 'bg-slate-100 text-slate-600 hover:bg-slate-200',
     label: prefs.darkMode ? 'text-slate-400' : 'text-slate-500',
+    stepperBtn: prefs.darkMode ? 'bg-slate-700 hover:bg-slate-600 text-blue-400' : 'bg-slate-200 hover:bg-slate-300 text-blue-600',
   }), [prefs.darkMode]);
 
   useEffect(() => {
@@ -248,6 +249,27 @@ const App: React.FC = () => {
     </div>
   );
 
+  const MobileStepper = ({ label, value, onValueChange, min = 0 }: { label: string, value: number, onValueChange: (v: number) => void, min?: number }) => (
+    <div className="flex flex-col items-center gap-2">
+      <label className={`block text-[10px] uppercase font-bold ${theme.label}`}>{label}</label>
+      <div className={`flex items-center justify-between w-full max-w-[100px] ${theme.input} rounded-2xl p-1 border shadow-inner`}>
+        <button 
+          onClick={() => onValueChange(Math.max(min, value - 1))}
+          className={`w-8 h-8 flex items-center justify-center rounded-xl transition-all active:scale-90 font-bold ${theme.stepperBtn}`}
+        >
+          −
+        </button>
+        <span className="text-sm font-bold w-6 text-center">{value}</span>
+        <button 
+          onClick={() => onValueChange(value + 1)}
+          className={`w-8 h-8 flex items-center justify-center rounded-xl transition-all active:scale-90 font-bold ${theme.stepperBtn}`}
+        >
+          +
+        </button>
+      </div>
+    </div>
+  );
+
   return (
     <div className={`min-h-screen transition-colors duration-300 relative ${theme.bg}`}>
       <main className="container mx-auto max-w-4xl min-h-screen">
@@ -306,16 +328,24 @@ const App: React.FC = () => {
             </section>
 
             <section className={`${theme.card} p-6 rounded-3xl border shadow-sm space-y-6`}>
-              <div className="grid grid-cols-3 gap-4">
-                {['inhale', 'exhale', 'hold'].map((key) => (
-                  <div key={key} className="text-center">
-                    <label className={`block text-[10px] uppercase font-bold ${theme.label} mb-1`}>
-                      {key === 'inhale' ? t.inhale : key === 'exhale' ? t.exhale : t.hold}
-                    </label>
-                    {/* Incremento de a 1 en el step */}
-                    <input type="number" step="1" value={config[key as keyof BreathConfig] as number} onChange={e => setConfig({...config, [key]: parseFloat(e.target.value) || 0})} className={`w-full ${theme.input} rounded-lg p-2 text-center font-bold border`} />
-                  </div>
-                ))}
+              <div className="grid grid-cols-3 gap-2">
+                <MobileStepper 
+                  label={t.inhale} 
+                  value={config.inhale} 
+                  min={1}
+                  onValueChange={(v) => setConfig({...config, inhale: v})} 
+                />
+                <MobileStepper 
+                  label={t.exhale} 
+                  value={config.exhale} 
+                  min={1}
+                  onValueChange={(v) => setConfig({...config, exhale: v})} 
+                />
+                <MobileStepper 
+                  label={t.hold} 
+                  value={config.hold} 
+                  onValueChange={(v) => setConfig({...config, hold: v})} 
+                />
               </div>
               <div>
                 <label className={`flex justify-between text-sm ${theme.label} mb-2`}><span>{t.amplitude}</span><span className={`font-bold ${theme.textMain}`}>{Math.round(config.amplitude * 100)}%</span></label>
@@ -365,7 +395,6 @@ const App: React.FC = () => {
                     {t.recommendation}
                   </p>
                   
-                  {/* Contenedor forzado para centrado perfecto en Android */}
                   <div className="w-full flex justify-center items-center py-2">
                     <a 
                       href="https://calendly.com/adrianaortiz/regulatuestres?month=2026-02"
@@ -400,7 +429,6 @@ const App: React.FC = () => {
               <div className={`${theme.card} flex justify-between items-center p-4 rounded-2xl shadow-sm border`}>
                 <button 
                   onClick={() => { 
-                    // Incremento de a 1 segundo
                     setConfig(prev => ({ ...prev, inhale: prev.inhale + 1, exhale: prev.exhale + 1 })); 
                   }} 
                   className={`px-6 py-3 rounded-xl font-bold ${theme.btnSecondary}`}
@@ -410,7 +438,6 @@ const App: React.FC = () => {
                 <div className={`font-mono text-lg font-bold ${theme.textMain}`}>{config.inhale.toFixed(1)}s / {config.exhale.toFixed(1)}s</div>
                 <button 
                   onClick={() => { 
-                    // Decremento de a 1 segundo
                     setConfig(prev => ({ 
                       ...prev, 
                       inhale: Math.max(2, prev.inhale - 1), 
