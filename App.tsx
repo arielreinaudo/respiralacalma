@@ -48,7 +48,7 @@ const App: React.FC = () => {
     exhale: 6,
     hold: 0,
     duration: 5,
-    amplitude: 0.8
+    amplitude: 0.8 // Valor default 80%
   });
   
   const [prefs, setPrefs] = useState<Preferences>(() => {
@@ -274,18 +274,17 @@ const App: React.FC = () => {
     <div className={`min-h-screen transition-colors duration-300 relative ${theme.bg}`}>
       <main className="container mx-auto max-w-4xl min-h-screen">
         {screen === Screen.SETUP && (
-          <div className="max-w-xl mx-auto p-6 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <header className="text-center space-y-6">
-              <h1 className={`text-4xl font-bold tracking-tight ${theme.textMain}`}>Emyti Holistic Healing</h1>
-              <p className={`${theme.textMain} text-lg max-w-md mx-auto font-medium`}>
+          <div className="max-w-xl mx-auto p-6 pt-4 space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <header className="text-center space-y-1">
+              <h1 className={`text-3xl font-bold tracking-tight ${theme.textMain}`}>Emyti Holistic Healing</h1>
+              <p className={`${theme.textMain} text-sm max-w-md mx-auto font-medium opacity-90`}>
                 {t.subtitle}
               </p>
               
-              <div className="flex flex-col items-center gap-3 pt-2">
-                <p className={`${theme.textDim} text-[10px] uppercase tracking-widest font-bold`}>{t.guides}</p>
-                <div className="flex justify-center items-center gap-8">
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-blue-500/30 shadow-lg bg-slate-300">
+              <div className="flex flex-col items-center pt-2">
+                <div className="flex justify-center items-center gap-6">
+                  <div className="flex flex-col items-center gap-1">
+                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-blue-500/30 shadow-lg bg-slate-300">
                       <img 
                         src={IMG_ADRIANA} 
                         alt="Dra. Adriana Ortiz" 
@@ -294,10 +293,10 @@ const App: React.FC = () => {
                         {...({ fetchPriority: "high" } as any)}
                       />
                     </div>
-                    <p className={`${theme.textMain} text-[10px] font-bold`}>Dra. Adriana Ortiz</p>
+                    <p className={`${theme.textMain} text-[9px] font-bold`}>Dra. Adriana Ortiz</p>
                   </div>
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-blue-500/30 shadow-lg bg-slate-300">
+                  <div className="flex flex-col items-center gap-1">
+                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-blue-500/30 shadow-lg bg-slate-300">
                       <img 
                         src={IMG_ARIEL} 
                         alt="Ariel Reinaudo" 
@@ -306,14 +305,13 @@ const App: React.FC = () => {
                         {...({ fetchPriority: "high" } as any)}
                       />
                     </div>
-                    <p className={`${theme.textMain} text-[10px] font-bold`}>Ariel Reinaudo</p>
+                    <p className={`${theme.textMain} text-[9px] font-bold`}>Ariel Reinaudo</p>
                   </div>
                 </div>
               </div>
             </header>
 
-            <section>
-              <h2 className={`text-xs font-semibold uppercase tracking-wider ${theme.label} mb-4`}>{t.objective}</h2>
+            <section className="pt-1">
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {BREATH_PRESETS[lang].map(p => {
                   const isSelected = config.inhale === p.inhale && config.exhale === p.exhale && config.hold === p.hold;
@@ -327,7 +325,7 @@ const App: React.FC = () => {
               </div>
             </section>
 
-            <section className={`${theme.card} p-6 rounded-3xl border shadow-sm space-y-6`}>
+            <section className={`${theme.card} p-5 rounded-3xl border shadow-sm space-y-4`}>
               <div className="grid grid-cols-3 gap-2">
                 <MobileStepper 
                   label={t.inhale} 
@@ -348,11 +346,7 @@ const App: React.FC = () => {
                 />
               </div>
               <div>
-                <label className={`flex justify-between text-sm ${theme.label} mb-2`}><span>{t.amplitude}</span><span className={`font-bold ${theme.textMain}`}>{Math.round(config.amplitude * 100)}%</span></label>
-                <input type="range" min="0.5" max="1" step="0.05" value={config.amplitude} onChange={e => setConfig({...config, amplitude: parseFloat(e.target.value)})} className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-600" />
-              </div>
-              <div>
-                <label className={`block text-sm ${theme.label} mb-2`}>{t.duration}</label>
+                <label className={`block text-[10px] uppercase font-bold ${theme.label} mb-2`}>{t.duration}</label>
                 <div className="flex gap-2">
                   {DURATIONS.map(d => (
                     <button key={d} onClick={() => setConfig({...config, duration: d as any})} className={`flex-1 py-2 rounded-lg text-sm transition-all ${config.duration === d ? 'bg-blue-600 text-white font-bold shadow-md shadow-blue-500/20' : `${theme.btnSecondary}`}`}>
@@ -363,39 +357,16 @@ const App: React.FC = () => {
               </div>
             </section>
 
-            <div className="space-y-4 pt-4">
+            <div className="space-y-4 pt-2">
               <LanguageSwitcher />
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button onClick={() => startSession(true)} className={`flex-1 py-4 px-6 rounded-2xl border-2 transition-all font-bold ${prefs.darkMode ? 'border-slate-800 text-slate-300 hover:bg-slate-900' : 'border-blue-100 text-blue-600 hover:bg-blue-50'}`}>{t.calibrate}</button>
-                <button onClick={() => startSession(false)} className="flex-1 py-4 px-6 rounded-2xl bg-blue-600 text-white font-bold shadow-xl shadow-blue-500/30 hover:bg-blue-700 transition-all hover:scale-[1.02] active:scale-95">{t.start}</button>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <button onClick={() => startSession(true)} className={`flex-1 py-3 px-6 rounded-2xl border-2 transition-all font-bold text-sm ${prefs.darkMode ? 'border-slate-800 text-slate-300 hover:bg-slate-900' : 'border-blue-100 text-blue-600 hover:bg-blue-50'}`}>{t.calibrate}</button>
+                <button onClick={() => startSession(false)} className="flex-1 py-3 px-6 rounded-2xl bg-blue-600 text-white font-bold text-sm shadow-xl shadow-blue-500/30 hover:bg-blue-700 transition-all active:scale-95">{t.start}</button>
               </div>
               
-              <div className="flex flex-col items-center gap-6 pt-6 w-full text-center">
-                <div className="flex justify-center gap-6 items-center w-full">
-                  <a 
-                    href="https://webilution.ac-page.com/regulatuestres?test=true"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`text-xs font-semibold py-2 px-4 rounded-full border border-transparent transition-all hover:border-slate-300 dark:hover:border-slate-700 ${theme.textDim} hover:${theme.textMain}`}
-                  >
-                    {t.moreInfo}
-                  </a>
-                  <a 
-                    href="https://content.app-us1.com/obmj7/2025/03/05/268c1b32-46aa-48ab-8640-a11e1ee25aa1.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`text-xs font-semibold py-2 px-4 rounded-full border border-transparent transition-all hover:border-slate-300 dark:hover:border-slate-700 ${theme.textDim} hover:${theme.textMain}`}
-                  >
-                    {t.freeEbook}
-                  </a>
-                </div>
-                
-                <div className="flex flex-col items-center gap-4 w-full text-center">
-                  <p className={`text-[10px] text-center px-8 italic opacity-80 ${theme.textDim} leading-relaxed max-w-xs mx-auto`}>
-                    {t.recommendation}
-                  </p>
-                  
-                  <div className="w-full flex justify-center items-center py-2">
+              <div className="flex flex-col items-center gap-4 pt-4 w-full text-center">
+                <div className="flex flex-col items-center gap-3 w-full text-center">
+                  <div className="w-full flex justify-center items-center">
                     <a 
                       href="https://calendly.com/adrianaortiz/regulatuestres?month=2026-02"
                       target="_blank"
@@ -405,8 +376,12 @@ const App: React.FC = () => {
                       {t.schedule}
                     </a>
                   </div>
+
+                  <p className={`text-[10px] text-center px-8 italic opacity-80 ${theme.textDim} leading-relaxed max-w-xs mx-auto`}>
+                    {t.recommendation}
+                  </p>
                   
-                  <p className={`text-[9px] text-center px-4 mt-2 opacity-60 ${theme.textDim} leading-tight max-w-sm mx-auto`}>
+                  <p className={`text-[9px] text-center px-4 mt-1 opacity-60 ${theme.textDim} leading-tight max-w-sm mx-auto`}>
                     {t.disclaimer}
                   </p>
                 </div>
