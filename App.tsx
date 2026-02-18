@@ -228,7 +228,7 @@ const App: React.FC = () => {
   };
 
   const LanguageSwitcher = () => (
-    <div className="flex items-center justify-center bg-slate-200 dark:bg-slate-800 p-1 rounded-full w-fit mx-auto mb-6 shadow-inner">
+    <div className="flex items-center justify-center bg-slate-200 dark:bg-slate-800 p-1 rounded-full w-fit mx-auto mb-2 shadow-inner">
       <button 
         onClick={() => setLang('es')} 
         className={`px-6 py-2 rounded-full text-[11px] font-bold transition-all ${lang === 'es' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-500 dark:text-slate-400 hover:text-blue-500'}`}
@@ -352,13 +352,14 @@ const App: React.FC = () => {
               </div>
             </section>
 
-            <div className="space-y-4 pt-2">
-              <LanguageSwitcher />
+            <div className="space-y-6 pt-2">
               <div className="flex flex-col gap-3">
                 <button onClick={() => startSession()} className="w-full py-4 px-6 rounded-2xl bg-blue-600 text-white font-bold text-base shadow-xl shadow-blue-500/30 hover:bg-blue-700 transition-all active:scale-95">{t.start}</button>
               </div>
+
+              <LanguageSwitcher />
               
-              <div className="flex flex-col items-center gap-4 pt-4 w-full text-center">
+              <div className="flex flex-col items-center gap-4 pt-2 w-full text-center">
                 <div className="flex flex-col items-center gap-3 w-full text-center">
                   <div className="w-full flex justify-center items-center">
                     <a 
