@@ -129,7 +129,7 @@ const App: React.FC = () => {
     setScreen(Screen.SETUP);
   }, []);
 
-  const startSession = (isCalibration: boolean) => {
+  const startSession = () => {
     setCycleCount(0);
     setPhase(Phase.INHALE);
     setProgress(0);
@@ -139,13 +139,8 @@ const App: React.FC = () => {
     lastSecondEmittedRef.current = -1;
     tipTimerRef.current = 0;
     
-    if (isCalibration) {
-      setTimeLeft(60); 
-      setScreen(Screen.CALIBRATION);
-    } else {
-      setTimeLeft(config.duration === 'free' ? 0 : config.duration * 60);
-      setScreen(Screen.SESSION);
-    }
+    setTimeLeft(config.duration === 'free' ? 0 : config.duration * 60);
+    setScreen(Screen.SESSION);
     setIsActive(true);
   };
 
@@ -170,7 +165,7 @@ const App: React.FC = () => {
         lastSecondEmittedRef.current = currentSecond;
         audioService.playClick();
         
-        if (screen === Screen.CALIBRATION || (screen === Screen.SESSION && config.duration !== 'free')) {
+        if (screen === Screen.SESSION && config.duration !== 'free') {
             setTimeLeft(prev => {
                 if (prev <= 1) {
                     setIsActive(false);
@@ -359,9 +354,8 @@ const App: React.FC = () => {
 
             <div className="space-y-4 pt-2">
               <LanguageSwitcher />
-              <div className="flex flex-col sm:flex-row gap-3">
-                <button onClick={() => startSession(true)} className={`flex-1 py-3 px-6 rounded-2xl border-2 transition-all font-bold text-sm ${prefs.darkMode ? 'border-slate-800 text-slate-300 hover:bg-slate-900' : 'border-blue-100 text-blue-600 hover:bg-blue-50'}`}>{t.calibrate}</button>
-                <button onClick={() => startSession(false)} className="flex-1 py-3 px-6 rounded-2xl bg-blue-600 text-white font-bold text-sm shadow-xl shadow-blue-500/30 hover:bg-blue-700 transition-all active:scale-95">{t.start}</button>
+              <div className="flex flex-col gap-3">
+                <button onClick={() => startSession()} className="w-full py-4 px-6 rounded-2xl bg-blue-600 text-white font-bold text-base shadow-xl shadow-blue-500/30 hover:bg-blue-700 transition-all active:scale-95">{t.start}</button>
               </div>
               
               <div className="flex flex-col items-center gap-4 pt-4 w-full text-center">
@@ -385,48 +379,6 @@ const App: React.FC = () => {
                     {t.disclaimer}
                   </p>
                 </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {screen === Screen.CALIBRATION && (
-          <div className="flex flex-col items-center justify-center min-h-screen p-6 text-center space-y-12">
-            <header className="space-y-2">
-              <h2 className={`text-2xl font-bold ${theme.textMain}`}>{t.calibTitle}</h2>
-              <p className={theme.textDim}>{t.calibDesc}</p>
-              <div className="inline-block px-4 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-mono text-sm font-bold">
-                {t.timeLeft}: {timeLeft}s
-              </div>
-            </header>
-            <BreathingCircle phase={phase} progress={progress} amplitude={config.amplitude} cycleCount={cycleCount} labels={{ inhale: t.inhale, exhale: t.exhale, hold: t.hold }} />
-            <div className="w-full max-w-md space-y-6">
-              <div className={`${theme.card} flex justify-between items-center p-4 rounded-2xl shadow-sm border`}>
-                <button 
-                  onClick={() => { 
-                    setConfig(prev => ({ ...prev, inhale: prev.inhale + 1, exhale: prev.exhale + 1 })); 
-                  }} 
-                  className={`px-6 py-3 rounded-xl font-bold ${theme.btnSecondary}`}
-                >
-                  {t.slower}
-                </button>
-                <div className={`font-mono text-lg font-bold ${theme.textMain}`}>{config.inhale.toFixed(1)}s / {config.exhale.toFixed(1)}s</div>
-                <button 
-                  onClick={() => { 
-                    setConfig(prev => ({ 
-                      ...prev, 
-                      inhale: Math.max(2, prev.inhale - 1), 
-                      exhale: Math.max(2, prev.exhale - 1) 
-                    })); 
-                  }} 
-                  className={`px-6 py-3 rounded-xl font-bold ${theme.btnSecondary}`}
-                >
-                  {t.faster}
-                </button>
-              </div>
-              <div className="flex gap-4">
-                <button onClick={stopSession} className={`flex-1 py-4 border rounded-2xl font-medium ${theme.btnSecondary}`}>{t.back}</button>
-                <button onClick={() => startSession(false)} className="flex-1 py-4 bg-blue-600 text-white rounded-2xl font-bold shadow-lg">{t.start}</button>
               </div>
             </div>
           </div>
