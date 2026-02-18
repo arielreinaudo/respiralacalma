@@ -362,7 +362,7 @@ const App: React.FC = () => {
                 <div className="flex flex-col items-center gap-3 w-full text-center">
                   <div className="w-full flex justify-center items-center">
                     <a 
-                      href="https://calendly.com/adrianaortiz/regulatuestres?month=2026-02"
+                      href="https://webilution.ac-page.com/regulatuestres?test=true"
                       target="_blank"
                       rel="noopener noreferrer"
                       className={`inline-block py-3 px-8 rounded-2xl text-sm font-bold border transition-all hover:scale-[1.03] active:scale-95 shadow-sm text-center mx-auto ${prefs.darkMode ? 'bg-slate-800 border-slate-700 text-white' : 'bg-slate-100 border-slate-200 text-slate-900'}`}
