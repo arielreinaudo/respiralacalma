@@ -4,13 +4,13 @@ import { Preset } from './types';
 export const BREATH_PRESETS: Record<string, Preset[]> = {
   es: [
     { id: 'calmar', name: 'Calmar', inhale: 4, exhale: 6, hold: 0 },
-    { id: 'enfocar', name: 'Enfocar', inhale: 4, exhale: 4, hold: 0 },
+    { id: 'enfocar', name: 'Enfocar', inhale: 4, exhale: 4, hold: 2 },
     { id: 'dormir', name: 'Dormir', inhale: 4, exhale: 6, hold: 2 },
     { id: 'recuperar', name: 'Recuperar', inhale: 5, exhale: 5, hold: 0 },
   ],
   en: [
     { id: 'calm', name: 'Calm', inhale: 4, exhale: 6, hold: 0 },
-    { id: 'focus', name: 'Focus', inhale: 4, exhale: 4, hold: 0 },
+    { id: 'focus', name: 'Focus', inhale: 4, exhale: 4, hold: 2 },
     { id: 'sleep', name: 'Sleep', inhale: 4, exhale: 6, hold: 2 },
     { id: 'recover', name: 'Recover', inhale: 5, exhale: 5, hold: 0 },
   ]
