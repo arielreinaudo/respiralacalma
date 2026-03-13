@@ -69,12 +69,12 @@ const WaveCanvas: React.FC<WaveCanvasProps> = ({
 
         if (t < inhaleTime) {
           const phaseProgress = t / inhaleTime;
-          y = centerY + amplitude * Math.cos(Math.PI * (phaseProgress + 1));
+          y = centerY - amplitude * Math.cos(Math.PI * (phaseProgress + 1));
         } else if (t < inhaleTime + exhaleTime) {
           const phaseProgress = (t - inhaleTime) / exhaleTime;
-          y = centerY + amplitude * Math.cos(Math.PI * phaseProgress);
+          y = centerY - amplitude * Math.cos(Math.PI * phaseProgress);
         } else {
-          y = centerY + amplitude;
+          y = centerY - amplitude;
         }
 
         if (x === 0) ctx.moveTo(x, y);
@@ -91,12 +91,12 @@ const WaveCanvas: React.FC<WaveCanvasProps> = ({
         
         if (s < inhaleTime) {
           const phaseProgress = s / inhaleTime;
-          y = centerY + amplitude * Math.cos(Math.PI * (phaseProgress + 1));
+          y = centerY - amplitude * Math.cos(Math.PI * (phaseProgress + 1));
         } else if (s < inhaleTime + exhaleTime) {
           const phaseProgress = (s - inhaleTime) / exhaleTime;
-          y = centerY + amplitude * Math.cos(Math.PI * phaseProgress);
+          y = centerY - amplitude * Math.cos(Math.PI * phaseProgress);
         } else {
-          y = centerY + amplitude;
+          y = centerY - amplitude;
         }
         
         ctx.beginPath();
@@ -110,13 +110,13 @@ const WaveCanvas: React.FC<WaveCanvasProps> = ({
 
       if (phase === Phase.INHALE) {
         currentX = (progress * inhaleTime / totalTime) * width;
-        currentY = centerY + amplitude * Math.cos(Math.PI * (progress + 1));
+        currentY = centerY - amplitude * Math.cos(Math.PI * (progress + 1));
       } else if (phase === Phase.EXHALE) {
         currentX = ((inhaleTime + progress * exhaleTime) / totalTime) * width;
-        currentY = centerY + amplitude * Math.cos(Math.PI * progress);
+        currentY = centerY - amplitude * Math.cos(Math.PI * progress);
       } else {
         currentX = ((inhaleTime + exhaleTime + progress * holdTime) / totalTime) * width;
-        currentY = centerY + amplitude;
+        currentY = centerY - amplitude;
       }
 
       // Ensure currentX is within bounds for rendering the dot correctly
