@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Screen, Phase, BreathConfig, Preferences, SessionRecord } from './types';
 import { BREATH_PRESETS, DURATIONS, MICRO_TIPS, UI_TEXT } from './constants';
 import { audioService } from './services/AudioService';
@@ -72,6 +73,7 @@ const App: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState<number>(0);
   const [tipIndex, setTipIndex] = useState(0);
   const [isActive, setIsActive] = useState(false);
+  const [showTip, setShowTip] = useState(true);
 
   // Refs for logic
   const requestRef = useRef<number>(0);
@@ -159,7 +161,7 @@ const App: React.FC = () => {
     accumulatedTimeRef.current += deltaTime;
     
     const elapsedTotal = accumulatedTimeRef.current;
-    const currentSecond = Math.floor(elapsedTotal);
+    const currentSecond = Math.floor(elapsedTotal - 0.5);
 
     if (currentSecond > lastSecondEmittedRef.current) {
         lastSecondEmittedRef.current = currentSecond;
@@ -176,9 +178,13 @@ const App: React.FC = () => {
         }
         
         tipTimerRef.current += 1;
+        if (tipTimerRef.current === 13) {
+            setShowTip(false);
+        }
         if (tipTimerRef.current >= 15) {
             tipTimerRef.current = 0;
             setTipIndex(prev => (prev + 1) % MICRO_TIPS[lang].length);
+            setShowTip(true);
         }
     }
 
@@ -350,6 +356,21 @@ const App: React.FC = () => {
                   ))}
                 </div>
               </div>
+              <div>
+                <label className={`block text-[10px] uppercase font-bold ${theme.label} mb-2`}>{t.volume}</label>
+                <div className="flex items-center gap-4">
+                  <input 
+                    type="range" 
+                    min="0" 
+                    max="1" 
+                    step="0.1" 
+                    value={prefs.audioVolume} 
+                    onChange={(e) => setPrefs({...prefs, audioVolume: parseFloat(e.target.value)})}
+                    className="flex-1 h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-600"
+                  />
+                  <span className={`text-xs font-mono w-8 ${theme.textMain}`}>{Math.round(prefs.audioVolume * 100)}%</span>
+                </div>
+              </div>
             </section>
 
             <div className="space-y-6 pt-2">
@@ -394,7 +415,22 @@ const App: React.FC = () => {
             <div className="flex-1 flex flex-col items-center justify-center space-y-16 w-full">
               <BreathingCircle phase={phase} progress={progress} amplitude={config.amplitude} cycleCount={cycleCount} labels={{ inhale: t.inhale, exhale: t.exhale, hold: t.hold }} />
               <div className="w-full max-w-2xl px-4"><WaveCanvas phase={phase} progress={progress} inhaleTime={config.inhale} exhaleTime={config.exhale} holdTime={config.hold} reduceMotion={prefs.reduceMotion} darkMode={prefs.darkMode} /></div>
-              <p className={`text-lg font-medium italic animate-in fade-in duration-1000 ${theme.textMain}`}>{MICRO_TIPS[lang][tipIndex]}</p>
+              <div className="min-h-[4rem] flex items-center justify-center px-6">
+                <AnimatePresence mode="wait">
+                  {showTip && (
+                    <motion.p 
+                      key={tipIndex}
+                      initial={{ opacity: 0, y: 5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -5 }}
+                      transition={{ duration: 0.5 }}
+                      className={`text-lg font-medium italic ${theme.textMain}`}
+                    >
+                      {MICRO_TIPS[lang][tipIndex]}
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
             <div className="w-full max-w-md flex gap-4 pt-8 pb-4">
               <button onClick={() => setIsActive(!isActive)} className={`flex-1 py-4 rounded-2xl font-bold transition-all active:scale-95 ${isActive ? theme.btnSecondary : 'bg-blue-600 text-white shadow-lg shadow-blue-500/30'}`}>{isActive ? t.pause : t.continue}</button>

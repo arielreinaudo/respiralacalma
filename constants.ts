@@ -18,24 +18,48 @@ export const BREATH_PRESETS: Record<string, Preset[]> = {
 
 export const MICRO_TIPS: Record<string, string[]> = {
   es: [
-    "Mandíbula suelta",
-    "Hombros pesados",
-    "Exhalación larga y suave",
-    "Respirá silencioso por nariz",
-    "Siente el aire entrar fresco",
-    "Suelta la tensión con cada exhalación",
-    "Columna recta pero relajada",
-    "Enfócate en el ritmo"
+    "Respirando lento, tu corazón se sincroniza.",
+    "Inhalando calma, exhalando toda la tensión.",
+    "Tu frecuencia cardíaca se va armonizando.",
+    "Llenando tus pulmones, liberando el estrés.",
+    "Entrando en un estado de coherencia.",
+    "Tu cuerpo entero se va soltando.",
+    "Relajando cada músculo, liberando tu peso.",
+    "Tu sistema nervioso se está calmando.",
+    "Permitiendo que tu cuerpo se repare.",
+    "Descansando y restaurando toda tu energía.",
+    "Fluyendo suavemente con el momento presente.",
+    "Tu mente se va volviendo serena.",
+    "Soltando los pensamientos, habitando tu cuerpo.",
+    "Sintiendo una paz interior muy profunda.",
+    "Encontrando el equilibrio en tu centro.",
+    "Cada respiración te va sanando profundamente.",
+    "Tu vitalidad se está renovando ahora.",
+    "Cultivando tu bienestar, latido a latido.",
+    "Sanando y fortaleciendo tu sistema natural.",
+    "Respirando y abrazando tu propia salud."
   ],
   en: [
-    "Loose jaw",
-    "Heavy shoulders",
-    "Long, smooth exhalation",
-    "Breathe silently through nose",
-    "Feel the cool air coming in",
-    "Release tension with each breath",
-    "Straight but relaxed spine",
-    "Focus on the rhythm"
+    "Breathing slowly, your heart synchronizes.",
+    "Inhaling calm, exhaling all tension.",
+    "Your heart rate is harmonizing.",
+    "Filling your lungs, releasing stress.",
+    "Entering a state of coherence.",
+    "Your whole body is letting go.",
+    "Relaxing every muscle, releasing your weight.",
+    "Your nervous system is calming down.",
+    "Allowing your body to repair itself.",
+    "Resting and restoring all your energy.",
+    "Flowing gently with the present moment.",
+    "Your mind is becoming serene.",
+    "Letting go of thoughts, inhabiting your body.",
+    "Feeling a very deep inner peace.",
+    "Finding balance in your center.",
+    "Each breath is healing you deeply.",
+    "Your vitality is being renewed now.",
+    "Cultivating your well-being, beat by beat.",
+    "Healing and strengthening your natural system.",
+    "Breathing and embracing your own health."
   ]
 };
 
@@ -71,7 +95,8 @@ export const UI_TEXT = {
     continue: "Continuar",
     exit: "Salir",
     wellDone: "¡Bien hecho!",
-    finish: "Finalizar"
+    finish: "Finalizar",
+    volume: "Volumen del Sonido"
   },
   en: {
     subtitle: "Regulate your Stress and Improve your Well-being with Cardiac Coherence",
@@ -102,6 +127,7 @@ export const UI_TEXT = {
     continue: "Continue",
     exit: "Exit",
     wellDone: "Well done!",
-    finish: "Finish"
+    finish: "Finish",
+    volume: "Sound Volume"
   }
 };

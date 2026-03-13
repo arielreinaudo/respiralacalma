@@ -83,6 +83,27 @@ const WaveCanvas: React.FC<WaveCanvasProps> = ({
       ctx.stroke();
       ctx.setLineDash([]);
 
+      // Draw pacer dots (every second, shifted by 0.5s)
+      ctx.fillStyle = darkMode ? 'rgba(255, 255, 255, 0.4)' : 'rgba(0, 0, 0, 0.25)';
+      for (let s = 0.5; s <= totalTime; s++) {
+        const x = (s / totalTime) * width;
+        let y = centerY;
+        
+        if (s < inhaleTime) {
+          const phaseProgress = s / inhaleTime;
+          y = centerY + amplitude * Math.cos(Math.PI * (phaseProgress + 1));
+        } else if (s < inhaleTime + exhaleTime) {
+          const phaseProgress = (s - inhaleTime) / exhaleTime;
+          y = centerY + amplitude * Math.cos(Math.PI * phaseProgress);
+        } else {
+          y = centerY + amplitude;
+        }
+        
+        ctx.beginPath();
+        ctx.arc(x, y, 5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
       // Calculate current position
       let currentX = 0;
       let currentY = centerY;
