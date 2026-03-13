@@ -132,6 +132,7 @@ const App: React.FC = () => {
   }, []);
 
   const startSession = () => {
+    audioService.resume();
     setCycleCount(0);
     setPhase(Phase.INHALE);
     setProgress(0);
@@ -435,7 +436,7 @@ const App: React.FC = () => {
               </div>
             </div>
             <div className="w-full max-w-md flex gap-4 pt-8 pb-4">
-              <button onClick={() => setIsActive(!isActive)} className={`flex-1 py-4 rounded-2xl font-bold transition-all active:scale-95 ${isActive ? theme.btnSecondary : 'bg-blue-600 text-white shadow-lg shadow-blue-500/30'}`}>{isActive ? t.pause : t.continue}</button>
+              <button onClick={() => { audioService.resume(); setIsActive(!isActive); }} className={`flex-1 py-4 rounded-2xl font-bold transition-all active:scale-95 ${isActive ? theme.btnSecondary : 'bg-blue-600 text-white shadow-lg shadow-blue-500/30'}`}>{isActive ? t.pause : t.continue}</button>
               <button onClick={stopSession} className={`flex-1 py-4 rounded-2xl font-bold transition-all ${theme.btnSecondary}`}>{t.exit}</button>
             </div>
           </div>

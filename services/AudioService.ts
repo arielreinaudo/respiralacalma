@@ -9,6 +9,10 @@ export class AudioService {
     // Context is initialized on first user interaction
   }
 
+  resume() {
+    this.initContext();
+  }
+
   private initContext() {
     if (!this.context) {
       this.context = new (window.AudioContext || (window as any).webkitAudioContext)();
