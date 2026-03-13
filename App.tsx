@@ -6,8 +6,8 @@ import { BREATH_PRESETS, DURATIONS, MICRO_TIPS, UI_TEXT } from './constants';
 import { audioService } from './services/AudioService';
 import WaveCanvas from './components/WaveCanvas';
 
-const IMG_ADRIANA = "https://www.dropbox.com/scl/fi/otjqcs6zsn2xlek2pxnn0/Adriana-circle.png?rlkey=9nelpp0neu1ihmqdic4cwme3x&dl=1";
-const IMG_ARIEL = "https://www.dropbox.com/scl/fi/v6b871uxejflzh2alff3z/Iconos-landing-visualmedita.png?rlkey=55j22v07rloudtrt3v2fj3ez9&dl=1";
+const IMG_ADRIANA = "https://www.dropbox.com/scl/fi/otjqcs6zsn2xlek2pxnn0/Adriana-circle.png?rlkey=9nelpp0neu1ihmqdic4cwme3x&raw=1";
+const IMG_ARIEL = "https://www.dropbox.com/scl/fi/v6b871uxejflzh2alff3z/Iconos-landing-visualmedita.png?rlkey=55j22v07rloudtrt3v2fj3ez9&raw=1";
 
 const BreathingCircle: React.FC<{ phase: Phase; progress: number; amplitude: number; cycleCount: number; labels: { inhale: string, exhale: string, hold: string } }> = ({ phase, progress, amplitude, cycleCount, labels }) => {
   const rampFactor = cycleCount < 3 ? 0.8 + (cycleCount * 0.06) : 1.0;
@@ -161,7 +161,7 @@ const App: React.FC = () => {
     accumulatedTimeRef.current += deltaTime;
     
     const elapsedTotal = accumulatedTimeRef.current;
-    const currentSecond = Math.floor(elapsedTotal - 0.75);
+    const currentSecond = Math.floor(elapsedTotal - 0.63);
 
     if (currentSecond > lastSecondEmittedRef.current) {
         lastSecondEmittedRef.current = currentSecond;
@@ -291,6 +291,7 @@ const App: React.FC = () => {
                         alt="Dra. Adriana Ortiz" 
                         className="w-full h-full object-cover"
                         loading="eager"
+                        referrerPolicy="no-referrer"
                         {...({ fetchPriority: "high" } as any)}
                       />
                     </div>
@@ -303,6 +304,7 @@ const App: React.FC = () => {
                         alt="Ariel Reinaudo" 
                         className="w-full h-full object-cover"
                         loading="eager"
+                        referrerPolicy="no-referrer"
                         {...({ fetchPriority: "high" } as any)}
                       />
                     </div>
