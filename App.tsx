@@ -161,7 +161,7 @@ const App: React.FC = () => {
     accumulatedTimeRef.current += deltaTime;
     
     const elapsedTotal = accumulatedTimeRef.current;
-    const currentSecond = Math.floor(elapsedTotal - 0.5);
+    const currentSecond = Math.floor(elapsedTotal - 0.75);
 
     if (currentSecond > lastSecondEmittedRef.current) {
         lastSecondEmittedRef.current = currentSecond;
